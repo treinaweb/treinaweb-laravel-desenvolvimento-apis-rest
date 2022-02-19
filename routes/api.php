@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/alunos', function () {
-    return 'lista de alunos';
-})->name('alunos.index');
+Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
 
 Route::get('/alunos/{id}', function () {
     return 'detalhes do aluno';
