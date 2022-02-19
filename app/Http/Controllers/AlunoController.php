@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
 use Illuminate\Http\Request;
 
@@ -23,15 +24,8 @@ class AlunoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AlunoRequest $request)
     {
-        $request->validate([
-            'nome' => ['required', 'string', 'between:2,100'],
-            'nascimento' => ['required', 'date'],
-            'genero' => ['required', 'size:1'],
-            'turma_id' => ['required', 'int', 'exists:turmas,id']
-        ]);
-
         $dadosAluno = $request->all();
 
         return response(
@@ -58,15 +52,8 @@ class AlunoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Aluno $aluno)
+    public function update(AlunoRequest $request, Aluno $aluno)
     {
-        $request->validate([
-            'nome' => ['required', 'string', 'between:2,100'],
-            'nascimento' => ['required', 'date'],
-            'genero' => ['required', 'size:1'],
-            'turma_id' => ['required', 'int', 'exists:turmas,id']
-        ]);
-
         $aluno->update($request->all());
 
         return $aluno;
