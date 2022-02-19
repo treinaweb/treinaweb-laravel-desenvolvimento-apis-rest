@@ -58,9 +58,18 @@ class AlunoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Aluno $aluno)
     {
-        //
+        $request->validate([
+            'nome' => ['required', 'string', 'between:2,100'],
+            'nascimento' => ['required', 'date'],
+            'genero' => ['required', 'size:1'],
+            'turma_id' => ['required', 'int', 'exists:turmas,id']
+        ]);
+
+        $aluno->update($request->all());
+
+        return $aluno;
     }
 
     /**
