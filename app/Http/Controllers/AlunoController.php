@@ -25,7 +25,9 @@ class AlunoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dadosRequest = $request->all();
+
+        dd($dadosRequest);
     }
 
     /**

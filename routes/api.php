@@ -23,9 +23,7 @@ Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
 
 Route::get('/alunos/{aluno}', [AlunoController::class, 'show'])->name('alunos.show');
 
-Route::post('/alunos', function () {
-    return 'criar aluno';
-})->name('alunos.store');
+Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
 
 Route::put('/alunos', function () {
     return 'atualizar aluno';
