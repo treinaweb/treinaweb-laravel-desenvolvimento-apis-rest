@@ -14,7 +14,7 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        return Aluno::get();
+        return response(Aluno::get(), 200, []);
     }
 
     /**
