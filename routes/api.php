@@ -27,6 +27,4 @@ Route::post('/alunos', [AlunoController::class, 'store'])->name('alunos.store');
 
 Route::put('/alunos/{aluno}', [AlunoController::class, 'update'])->name('alunos.update');
 
-Route::delete('/alunos', function () {
-    return 'apagar aluno';
-})->name('alunos.destroy');
+Route::delete('/alunos/{aluno}', [AlunoController::class, 'destroy'])->name('alunos.destroy');
