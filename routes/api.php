@@ -21,9 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/alunos', [AlunoController::class, 'index'])->name('alunos.index');
 
-Route::get('/alunos/{id}', function () {
-    return 'detalhes do aluno';
-})->name('alunos.show');
+Route::get('/alunos/{aluno}', [AlunoController::class, 'show'])->name('alunos.show');
 
 Route::post('/alunos', function () {
     return 'criar aluno';
