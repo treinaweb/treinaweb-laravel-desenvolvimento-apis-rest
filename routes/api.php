@@ -18,6 +18,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::delete('/teste', function () {
-    return 'cheguei na rota de teste';
-});
+Route::get('/alunos', function () {
+    return 'lista de alunos';
+})->name('alunos.index');
+
+Route::get('/alunos/{id}', function () {
+    return 'detalhes do aluno';
+})->name('alunos.show');
+
+Route::post('/alunos', function () {
+    return 'criar aluno';
+})->name('alunos.store');
+
+Route::put('/alunos', function () {
+    return 'atualizar aluno';
+})->name('alunos.update');
+
+Route::delete('/alunos', function () {
+    return 'apagar aluno';
+})->name('alunos.destroy');
