@@ -25,9 +25,19 @@ class AlunoController extends Controller
      */
     public function store(Request $request)
     {
-        $dadosRequest = $request->all();
+        $request->validate([
+            'nome' => ['required', 'string', 'between:2,100'],
+            'nascimento' => ['required', 'date'],
+            'genero' => ['required', 'size:1'],
+            'turma_id' => ['required', 'int', 'exists:turmas,id']
+        ]);
 
-        dd($dadosRequest);
+        $dadosAluno = $request->all();
+
+        return response(
+            Aluno::create($dadosAluno),
+            201
+        );
     }
 
     /**
