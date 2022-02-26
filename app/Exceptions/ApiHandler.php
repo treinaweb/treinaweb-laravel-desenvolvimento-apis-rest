@@ -5,32 +5,72 @@ namespace App\Exceptions;
 use Throwable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Http\Response;
 
 trait ApiHandler
 {
-    public function tratarErros(Throwable $exception)
+    /**
+     * Trata os erros personalizados
+     *
+     * @param Throwable $exception
+     * @return Response
+     */
+    public function tratarErros(Throwable $exception): Response
     {
         if ($exception instanceof ModelNotFoundException) {
-            return $this->respostaPadrao(
-                "registro-nao-encontrado",
-                "O sistema não encontrou o registro que vocês está buscando",
-                404
-            );
+            return $this->modelNotFoundException();
         }
 
         if ($exception instanceof ValidationException) {
-            return $this->respostaPadrao(
-                "erro-validacao",
-                "Os dados enviados são invalidos",
-                400,
-                $exception->errors()
-            );
+            return $this->validationException($exception);
         }
     }
 
-    public function respostaPadrao(string $code, string $mensagem, int $status, array $erros = null)
+    /**
+     * Retorna o erro quando não encontrado o registro
+     *
+     * @return Response
+     */
+    public function modelNotFoundException(): Response
     {
+        return $this->respostaPadrao(
+            "registro-nao-encontrado",
+            "O sistema não encontrou o registro que vocês está buscando",
+            404
+        );
+    }
+
+    /**
+     * Retorna o erro quando os dados não são válidos
+     *
+     * @param ValidationException $e
+     * @return Response
+     */
+    public function validationException(ValidationException $e): Response
+    {
+        return $this->respostaPadrao(
+            "erro-validacao",
+            "Os dados enviados são invalidos",
+            400,
+            $e->errors()
+        );
+    }
+
+    /**
+     * Retorna uma resposta padrão para os erros da API
+     *
+     * @param string $code
+     * @param string $mensagem
+     * @param integer $status
+     * @param array|null $erros
+     * @return Response
+     */
+    public function respostaPadrao(
+        string $code,
+        string $mensagem,
+        int $status,
+        array $erros = null
+    ): Response {
         $dadosResposta = [
             'code' => $code,
             'message' => $mensagem,
