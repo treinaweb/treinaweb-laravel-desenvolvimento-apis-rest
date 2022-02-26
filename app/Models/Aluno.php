@@ -16,6 +16,10 @@ class Aluno extends Model
         'nascimento' => 'date:d/m/Y'
     ];
 
+    //protected $hidden = ['created_at', 'updated_at'];
+
+    protected $visible = ['id', 'nome', 'genero', 'turma_id'];
+
     /**
      * Define a relação entre aluno e turma
      *
