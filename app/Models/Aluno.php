@@ -12,6 +12,10 @@ class Aluno extends Model
 
     protected $fillable = ['nome', "nascimento", "genero", "turma_id"];
 
+    protected $casts = [
+        'nascimento' => 'date:d/m/Y'
+    ];
+
     /**
      * Define a relação entre aluno e turma
      *
