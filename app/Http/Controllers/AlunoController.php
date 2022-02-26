@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aluno;
 use Illuminate\Http\Response;
 use App\Http\Requests\AlunoRequest;
+use App\Http\Resources\AlunoCollection;
 use App\Http\Resources\AlunoResource;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -13,11 +14,11 @@ class AlunoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Collection
+     * @return AlunoCollection
      */
-    public function index(): Collection
+    public function index(): AlunoCollection
     {
-        return Aluno::get();
+        return new AlunoCollection(Aluno::get());
     }
 
     /**
