@@ -21,6 +21,7 @@ class AlunoUnico extends JsonResource
         $links->delete(route('alunos.destroy', $this->id), 'aluno_remover');
 
         return [
+            'id' => $this->id,
             'nome_aluno' => $this->nome,
             'turma' => new TurmaResource($this->whenLoaded('turma')),
             'links' => $links->toArray()

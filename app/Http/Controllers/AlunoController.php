@@ -8,6 +8,7 @@ use App\Http\Requests\AlunoRequest;
 use App\Http\Resources\AlunoColecao;
 use App\Http\Resources\AlunoUnico;
 use Illuminate\Http\Request;
+use SimpleXMLElement;
 
 class AlunoController extends Controller
 {
@@ -49,7 +50,15 @@ class AlunoController extends Controller
      */
     public function show(Aluno $aluno)
     {
-        return new AlunoUnico($aluno);
+        if (request()->header("Accept") === "application/xml") {
+            return $this->pegarAlunoXMLResponse($aluno);
+        }
+
+        if (request()->wantsJson()) {
+            return new AlunoUnico($aluno);
+        }
+
+        return response('Formato de dado desconhecido');
     }
 
     /**
@@ -77,5 +86,25 @@ class AlunoController extends Controller
         $aluno->delete();
 
         return [];
+    }
+
+    /**
+     * Retorna uma response com xml do aluno
+     *
+     * @param Aluno $aluno
+     * @return Response
+     */
+    private function pegarAlunoXMLResponse(Aluno $aluno): Response
+    {
+        $aluno = $aluno->toArray();
+
+        $xml = new SimpleXMLElement('<aluno/>');
+
+        array_walk_recursive($aluno, function ($valor, $chave) use ($xml) {
+            $xml->addChild($chave, $valor);
+        });
+
+        return response($xml->asXML())
+            ->header('Content-Type', 'application/xml');
     }
 }
