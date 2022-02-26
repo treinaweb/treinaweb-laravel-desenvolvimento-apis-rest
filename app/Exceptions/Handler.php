@@ -2,13 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ApiHandler;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -44,28 +44,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($request->is('api/*')) {
-            if ($exception instanceof ModelNotFoundException) {
-                return response(
-                    [
-                        'code' => "registro-nao-encontrado",
-                        'message' => "O sistema não encontrou o registro que vocês está buscando",
-                        'status' => 404
-                    ],
-                    404
-                );
-            }
-
-            if ($exception instanceof ValidationException) {
-                return response(
-                    [
-                        'code' => "erro-validacao",
-                        'message' => "Os dados enviados são invalidos",
-                        'status' => 400,
-                        'erros' => $exception->errors()
-                    ],
-                    400
-                );
-            }
+            return $this->tratarErros($exception);
         }
 
         return parent::render($request, $exception);
