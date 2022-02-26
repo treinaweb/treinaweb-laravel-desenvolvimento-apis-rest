@@ -15,7 +15,7 @@ trait ApiHandler
      * @param Throwable $exception
      * @return Response
      */
-    public function tratarErros(Throwable $exception): Response
+    public function tratarErros(Throwable $exception): Response|false
     {
         if ($exception instanceof ModelNotFoundException) {
             return $this->modelNotFoundException();
@@ -24,6 +24,8 @@ trait ApiHandler
         if ($exception instanceof ValidationException) {
             return $this->validationException($exception);
         }
+
+        return false;
     }
 
     /**
