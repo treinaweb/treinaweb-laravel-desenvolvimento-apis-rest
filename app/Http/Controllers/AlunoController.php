@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Requests\AlunoRequest;
 use App\Http\Resources\AlunoColecao;
 use App\Http\Resources\AlunoUnico;
+use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
@@ -15,9 +16,15 @@ class AlunoController extends Controller
      *
      * @return AlunoCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new AlunoColecao(Aluno::get());
+        if ($request->query('relacoes') === 'turma') {
+            $alunos = Aluno::with('turma')->get();
+        } else {
+            $alunos = Aluno::get();
+        }
+
+        return new AlunoColecao($alunos);
     }
 
     /**

@@ -16,7 +16,7 @@ class AlunoUnico extends JsonResource
     {
         return [
             'nome_aluno' => $this->nome,
-            'turma' => new TurmaResource($this->turma)
+            'turma' => new TurmaResource($this->whenLoaded('turma'))
         ];
     }
 }
