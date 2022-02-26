@@ -19,9 +19,9 @@ class AlunoController extends Controller
     public function index(Request $request)
     {
         if ($request->query('relacoes') === 'turma') {
-            $alunos = Aluno::with('turma')->get();
+            $alunos = Aluno::with('turma')->paginate(2);
         } else {
-            $alunos = Aluno::get();
+            $alunos = Aluno::paginate(2);
         }
 
         return new AlunoColecao($alunos);

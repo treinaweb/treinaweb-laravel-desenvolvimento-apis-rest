@@ -16,9 +16,6 @@ class AlunoColecao extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'dados' => $this->collection,
-            'links' => ['chave' => 'valor']
-        ];
+        return $this->collection;
     }
 }
