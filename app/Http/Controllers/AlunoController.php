@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Aluno;
 use Illuminate\Http\Response;
 use App\Http\Requests\AlunoRequest;
-use App\Http\Resources\AlunoCollection;
-use App\Http\Resources\AlunoResource;
-use Illuminate\Database\Eloquent\Collection;
+use App\Http\Resources\AlunoColecao;
+use App\Http\Resources\AlunoUnico;
 
 class AlunoController extends Controller
 {
@@ -16,9 +15,9 @@ class AlunoController extends Controller
      *
      * @return AlunoCollection
      */
-    public function index(): AlunoCollection
+    public function index()
     {
-        return new AlunoCollection(Aluno::get());
+        return new AlunoColecao(Aluno::get());
     }
 
     /**
@@ -41,9 +40,9 @@ class AlunoController extends Controller
      * @param  Aluno $aluno
      * @return AlunoResource
      */
-    public function show(Aluno $aluno): AlunoResource
+    public function show(Aluno $aluno)
     {
-        return new AlunoResource($aluno);
+        return new AlunoUnico($aluno);
     }
 
     /**
